@@ -1,0 +1,111 @@
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{purple}{rgb}{1,0,1}
+\definecolor{orange}{rgb}{1,0.6,0}
+
+\lstdefinestyle{customc}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=L,
+    xleftmargin=\parindent
+    language=C,
+    showstringspaces=false,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\bfseries\color{mygreen}
+    commentstyle=\itshape\color{purple}
+    identifierstyle=\color{blue},
+    stringstyle=\color{orange},
+}
+
+\lstset{escapechar=@,style=customc}
+
+\author{Zachary Vogel}
+\date{\today}
+\title{Notes in MCEN 5115}
+
+\begin{document}
+\maketitle
+
+
+\section*{List of functions}
+\subsection*{microcontroller}
+\begin{itemize}
+    \item init\_colo
+        \begin{itemize}
+            \item determines color we are looking for
+        \end{itemize}
+    \item send\_request
+        \begin{itemize}
+            \item must be able to take in a parameter to determine if we are looking for middle circle or one of the hoops
+            \item going to use uart to make the request
+            \item will send a code that will correspond to these
+        \end{itemize}
+    \item receive\_data
+        \begin{itemize}
+            \item recieves 2 bytes of data, first is the distance to the center of the target, second is angle from center of target.
+            \item if all values are zero, need to look for hoop, calls move\_robo with an angle and no position.
+        \end{itemize}
+    \item move\_robo
+        \begin{itemize}
+            \item must be able to take in a vector which will define 2-d position from where we are to move to
+            \item also need a 1-d angle to figure out which way to point relative to current position
+            \item should take into account the motor effects
+        \end{itemize}
+    \item launch\_balls
+        \begin{itemize}
+            \item actuate the motor to shoot
+            \item should only shoot if we have recieved that we are in the ccorrect position from recieve\_request
+        \end{itemize}
+    \item pick\_balls
+        \begin{itemize}
+            \item actuates the fan to pick up balls
+        \end{itemize}
+    \item check\_lines
+        \begin{itemize}
+            \item checks the line\_followers to see if we are on the edge of the ball area
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Odroid}
+will be constantly waiting to call receive data
+\begin{itemize}
+    \item receive\_request
+        \begin{itemize}
+            \item receives the data available in the uart
+            \item processes it to call the correct function
+        \end{itemize}
+    \item look\_hoop
+        \begin{itemize}
+            \item looks for the hoop
+            \item if it finds it, calculates angle from the center hoop and distance to the center
+            \item otherwise returns 0,0
+        \end{itemize}
+    \item look\_center
+        \begin{itemize}
+            \item finds the center circle and returns distance to the center of it
+        \end{itemize}
+    \item send\_data
+        \begin{itemize}
+            \item will take the data from look\_hoop or look\_center and send it over Uart
+        \end{itemize}
+\end{itemize}
+
+
+\section*{Psuedo code}
+\subsection*{Microcontroller}
+\begin{lstlisting}
+
+\end{lstlisting}
+
+\end{document}
